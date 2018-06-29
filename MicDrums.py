@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from scipy.io import wavfile
 
-snareGateValue = 0.7
+snareGateValue = 0.4
 kickGateValue = 0.7 / 5.0
 mappingBlockSize = 512
 maxDrumWidth = 5000
@@ -55,6 +55,8 @@ def removeDublicates(drums, types):
     while needMoreIterations:
         needMoreIterations = False
         for i in range(0, len(drums) - 1):
+            if i >= len(drums) - 1:
+                break
             nextSample = drums[i+1]
             currentSample = drums[i]
             if nextSample - currentSample <= maxDrumWidth:
@@ -141,7 +143,7 @@ generatedSnares = generate_drum_beat(snareClip, snares, snareRate)
 
 wavfile.write("generatedKickBeat.wav", kickRate, generatedKicks)
 wavfile.write("generatedSnareBeat.wav", snareRate, generatedSnares)
-wavfile.write("generatedMixtape.wav", kickRate, mix(generatedKicks, generatedSnares))
+wavfile.write("/home/whale/Desktop/generatedMixtape.wav", kickRate, mix(generatedKicks, generatedSnares))
 
 plt.plot(generatedKicks)
 plt.show()
